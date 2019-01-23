@@ -7,22 +7,18 @@ class Delivery(models.Model):
 
     sale_id = fields.Many2one('sale.order', '', store=True)
     x_orderno = fields.Char('PO N°', compute="get_no")
-    x_ordername = fields.Char('Quotation Name', compute="get_name")
-    
-    
-    
-    
-    @api.one
-    @api.depends('origin')
-    def get_name(self):
-        for rec in self.env['sale.order'].search([('name', '=', self.origin)])[0]:
-            self['x_ordername'] = rec.x_ordername
-    
+    x_ordername = fields.Char('Order Name', compute="_get_ordername")    
     
     @api.one
     @api.depends('origin')
     def get_no(self):
-        for rec in self.env['sale.order'].search([('name', '=', self.origin)])[0]:
+        for rec in self.env['sale.order'].search([('name', '=', self.origin)]):
             self['x_orderno'] = rec.x_orderno
 
+    @api.one
+    @api.depends('origin')
+    def _get_ordername(self):
+        for rec in self.env['sale.order'].search([('name', '=', self.origin)]):
+            self['x_ordername'] = rec.x_ordername
    
+

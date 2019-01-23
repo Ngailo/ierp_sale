@@ -11,6 +11,11 @@
                     <field name = "x_orderno"  attrs= "{'invisible': [('state', 'in', ['draft','sent','cancel'])],
                     'required': [('state', 'not in', ['draft', 'sent', 'cancel'], 'True')]}"/>
                 </xpath>
+
+                <xpath expr = "/form/sheet/group/group/field[@name='partner_shipping_id']" position="after">
+                    <field name = "requester_name"  attrs="{'readonly': [('state', 'in', ('sale','done'))]}"/>
+                </xpath>
+
                 <xpath expr = "/form/sheet/div[hasclass('oe_title')]" position="inside">
                 <h2>
                   <field name = "x_ordername" placeholder="Quotation Name"/>
@@ -27,10 +32,13 @@
         <field name="arch" type="xml">
             <xpath expr = "/tree/field[@name='partner_id']" position="after">
                 <field name = "x_ordername"/>
+                <field name = "x_orderno"/>
             </xpath>
             <xpath expr = "/tree/field[@name='amount_total']" position="replace">
                 <field name = "amount_total"/>
             </xpath>
+            <xpath expr = "/tree/field[@name='commitment_date']" position="replace"></xpath>
+            <xpath expr = "/tree/field[@name='expected_date']" position="replace"></xpath>
         </field>
     </record>
         
@@ -42,11 +50,26 @@
         <field name="arch" type="xml">
             <xpath expr = "/tree/field[@name='partner_id']" position="after">
                 <field name = "x_ordername"/>
+                <field name = "x_orderno"/>
             </xpath>
             <xpath expr = "/tree/field[@name='amount_total']" position="replace">
                 <field name = "amount_total"/>
             </xpath>
+            <xpath expr = "/tree/field[@name='commitment_date']" position="replace"></xpath>
+            <xpath expr = "/tree/field[@name='expected_date']" position="replace"></xpath>
         </field>
    </record>
+
+         <!--Extending Search view-->
+    <record id="view_sale_order_inherit_search" model="ir.ui.view">
+      <field name="name">sale.order.search.expand.filter</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+      <field name="arch" type="xml">
+        <xpath expr="//search" position="inside">
+          <field string="PO N°" name="x_orderno" domain="[('x_orderno','=',self)]"/>
+        </xpath>
+      </field>
+    </record>
     </data>
 </odoo>

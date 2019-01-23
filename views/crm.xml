@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="crm_custom_kanban" model="ir.ui.view">
+            <field name="name">CRM Custom Kanban</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr = "/kanban/templates/t/div/div/div[hasclass('o_kanban_record_bottom')]" position="before">
+                    <div>
+                        <p>Expected Closing:   <field name="date_deadline"/></p>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

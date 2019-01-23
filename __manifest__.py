@@ -22,7 +22,7 @@
     'version': '11.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale_management', 'stock', 'account_accountant', 'purchase'],
+    'depends': ['base', 'sale_management', 'stock', 'account', 'purchase', 'crm'],
 
     # always loaded
     'data': [
@@ -31,6 +31,7 @@
         'views/sale_order_view.xml',
         'views/res_partner_view.xml',
         'views/res_company_view.xml',
+        'views/crm.xml',
     
     ],
     # only loaded in demonstration mode

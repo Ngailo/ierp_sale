@@ -16,6 +16,10 @@
                     <field name="x_vatno"/>
                 </xpath>
 
+                 <xpath expr = "/form/sheet/group/group/field[@name='x_orderno']" position="after">
+                    <field name = "requester_name"  attrs="{'readonly': True}"/>
+                </xpath>
+
                 <xpath expr = "/form/sheet/group/group/field[@name='x_orderno']" position="after">
                     <field name = "x_vatsignature" required="1"/>
                 </xpath>
@@ -32,6 +36,39 @@
             <xpath expr = "/form/sheet/group/group/field[@name='reference']" position="after">
                 <field name = "x_vatno"/>
             </xpath>
+         </field>
+     </record>
+
+     <record id="invoice_tree_inherited" model="ir.ui.view">
+         <field name="name">account.invoice.tree</field>
+         <field name="model">account.invoice</field>
+         <field name="inherit_id" ref="account.invoice_tree"/>
+         <field name="arch" type="xml">
+           <xpath expr = "//tree" position="replace">
+             <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
+                 <field name="number"/>
+                 <field name="date_invoice"/>
+                 <field name="x_orderno"/>
+                 <field name="partner_id" groups="base.group_user" string="Customer"/>
+                 <field name="x_ordername"/>
+                 <field name="amount_untaxed" string="Tax Excluded" sum="Total"/>
+                 <field name="amount_tax" sum="Total"/>
+                 <field name="amount_total_signed" string="Total" sum="Total"/>
+                 <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                 <field name="state"/>
+                 <field name="currency_id" invisible="1"/>
+                 <field name="company_currency_id" invisible="1"/>
+                 <field name="type" invisible="context.get('type',True)"/>
+                 <field name="commercial_partner_id" invisible="1"/>
+                 <field name="reference" invisible="1"/>
+	         <field name="name" invisible="1"/>
+	         <field name="journal_id" invisible="1"/>
+                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"  invisible="1"/>
+                 <field name="user_id" invisible="1"/>
+                 <field name="date_due" invisible="1"/>
+	         <field name="origin" invisible="1"/>
+             </tree>
+           </xpath>
          </field>
      </record>
     </data>
