@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+         
+        <record model="ir.ui.view" id="extending_invoice_view">
+            <field name="name">Adding esd signature,po number,order name in invoice form view</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr = "/form/sheet/group/group/field[@name='payment_term_id']" position="after">
+                    <field name="x_orderno"/>
+                </xpath>
+                <xpath expr = "/form/sheet/group/group/field[@name='partner_id']" position="before">
+                    <field name = "x_ordername"/>
+                </xpath>
+                <xpath expr = "/form/sheet/group/group/field[@name='payment_term_id']" position="after">
+                    <field name="x_vatno"/>
+                </xpath>
+
+                <xpath expr = "/form/sheet/group/group/field[@name='x_orderno']" position="after">
+                    <field name = "x_vatsignature" required="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        
+    <!-- Vendor Bills Form View -->
+     <record model="ir.ui.view" id="extending_vendor_form_view">
+         <field name="name">Adding vrn in vendor bills form view</field>
+         <field name="model">account.invoice</field>
+         <field name="inherit_id" ref="account.invoice_supplier_form"/>
+         <field name="arch" type="xml">
+            <xpath expr = "/form/sheet/group/group/field[@name='reference']" position="after">
+                <field name = "x_vatno"/>
+            </xpath>
+         </field>
+     </record>
+    </data>
+</odoo>

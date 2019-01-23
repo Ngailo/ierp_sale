@@ -1,0 +1,14 @@
+<odoo>
+
+	 <record model="ir.ui.view" id="extending_customer_form_view">
+         <field name="name">Adding vrn in contact form view</field>
+         <field name="model">res.partner</field>
+         <field name="inherit_id" ref="base.view_partner_form"/>
+         <field name="arch" type="xml">
+            <xpath expr = "/form/sheet/group/group/field[@name='vat']" position="after">
+                <field name = "x_vatno"/>
+            </xpath>
+         </field>
+     </record>
+	
+</odoo>

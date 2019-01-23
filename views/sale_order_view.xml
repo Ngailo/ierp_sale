@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        
+        <!-- Adding Fields in the sale order form view-->
+        <record model="ir.ui.view" id="extending_sale_form_view">
+            <field name="name">Adding quotation name form view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr = "/form/sheet/group/group/field[@name='partner_id']" position="after">
+                    <field name = "x_orderno"  attrs= "{'invisible': [('state', 'in', ['draft','sent','cancel'])],
+                    'required': [('state', 'not in', ['draft', 'sent', 'cancel'], 'True')]}"/>
+                </xpath>
+                <xpath expr = "/form/sheet/div[hasclass('oe_title')]" position="inside">
+                <h2>
+                  <field name = "x_ordername" placeholder="Quotation Name"/>
+                </h2>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Extending Quotation Tree list-->
+    <record model="ir.ui.view" id="extending_sale_list_view">
+        <field name="name">Adding quotation name in quotation tree view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr = "/tree/field[@name='partner_id']" position="after">
+                <field name = "x_ordername"/>
+            </xpath>
+            <xpath expr = "/tree/field[@name='amount_total']" position="replace">
+                <field name = "amount_total"/>
+            </xpath>
+        </field>
+    </record>
+        
+     <!-- Extending sale order Tree list-->
+  <record model="ir.ui.view" id="extending_sale_order_list_view">
+        <field name="name">Adding quotation name in sale order list view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr = "/tree/field[@name='partner_id']" position="after">
+                <field name = "x_ordername"/>
+            </xpath>
+            <xpath expr = "/tree/field[@name='amount_total']" position="replace">
+                <field name = "amount_total"/>
+            </xpath>
+        </field>
+   </record>
+    </data>
+</odoo>

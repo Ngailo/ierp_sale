@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!-- Inherit Company Form View to add VRN Number -->
+       <record id="company_inherited_form_view" model="ir.ui.view">
+           <field name="name">Company Inherited Form View</field>
+           <field name="model">res.company</field>
+           <field name="inherit_id" ref="base.view_company_form"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="/form/sheet/notebook/page/group/group/field[@name='vat']" position="after">
+                   <field name="x_vatno" placeholder = "e.g. 44-001122"/>
+               </xpath>
+
+               <xpath expr="/form/sheet/notebook/page/group/group/field[@name='vat']" position="after">
+                   <field name="our_partners" widget="image" class="oe_avatar"/>
+               </xpath>
+
+           </field>
+       </record>
+    </data>
+</odoo>
